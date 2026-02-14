@@ -1,1 +1,52 @@
-<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n</body>\n</html>\n
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Temple RA - FLL</title>
+
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ar-js-org@3.4.5/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+</head>
+
+<body>
+
+<a-scene
+  embedded
+  vr-mode-ui="enabled: false"
+  shadow="enabled: false"
+  arjs="sourceType: webcam; debugUIEnabled: false;"
+  renderer="logarithmicDepthBuffer: true; precision: mediump;"
+>
+
+  <a-assets>
+    <a-asset-item id="templeModel" src="temple.glb"></a-asset-item>
+  </a-assets>
+
+  <a-marker preset="hiro">
+
+    <a-entity
+      gltf-model="#templeModel"
+      scale="0.4 0.4 0.4"
+      position="0 0 0"
+      rotation="0 180 0">
+    </a-entity>
+
+  </a-marker>
+
+  <a-entity camera></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelector('#templeModel').addEventListener('error', function () {
+  alert("Erreur : le modèle 3D ne s'est pas chargé.");
+});
+</script>
+
+</body>
+</html>
