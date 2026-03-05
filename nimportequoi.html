@@ -1,3 +1,5 @@
+Super ! On peut améliorer ton code pour qu’il soit plus fiable, plus clair et compatible avec un projet FLL AR. Voici une version optimisée à partir de notre discussion :
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Temple RA - FLL</title>
 
+  <!-- A-Frame et AR.js -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/ar-js-org@3.4.5/aframe/build/aframe-ar.js"></script>
 
@@ -23,30 +26,63 @@
   renderer="logarithmicDepthBuffer: true; precision: mediump;"
 >
 
+  <!-- Définition des assets 3D -->
   <a-assets>
+    <!-- On garde l'id pour la sécurité, mais on va l'appeler directement -->
     <a-asset-item id="templeModel" src="parthenon.glb"></a-asset-item>
   </a-assets>
 
-<a-marker preset="hiro">
-  <a-box position="0 0.5 0" material="color: red;" scale="0.2 0.2 0.2"></a-box>
+  <!-- MARKER : barcode marker (ID = 10) pour plus de simplicité -->
+  <a-marker type="barcode" value="10">
+    <!-- Optionnel : un cube pour tester le marker -->
+    <a-box position="0 0.5 0" material="color: red;" scale="0.2 0.2 0.2"></a-box>
 
-  <a-entity
-    gltf-model="#templeModel"
-    scale="0.05 0.05 0.05" 
-    position="0 0 0"
-    rotation="0 0 0">
-  </a-entity>
-</a-marker>
+    <!-- Modèle 3D du temple -->
+    <a-entity
+      gltf-model="parthenon.glb"   <!-- on utilise le chemin direct -->
+      scale="0.05 0.05 0.05"
+      position="0 0 0"
+      rotation="0 0 0"
+      animation-mixer   <!-- si le modèle a des animations -->
+    >
+    </a-entity>
+  </a-marker>
 
+  <!-- Caméra -->
   <a-entity camera></a-entity>
 
 </a-scene>
 
+<!-- Gestion des erreurs de chargement -->
 <script>
-document.querySelector('#templeModel').addEventListener('error', function () {
-  alert("Erreur : le modèle 3D ne s'est pas chargé.");
-});
+  const model = document.querySelector('#templeModel');
+  model.addEventListener('error', () => {
+    alert("Erreur : le modèle 3D ne s'est pas chargé. Vérifie le fichier parthenon.glb et le chemin.");
+  });
 </script>
 
 </body>
 </html>
+✅ Améliorations apportées
+
+Barcode marker : plus simple à utiliser qu’un pattern marker, idéal pour FLL (ID = 10).
+
+Chargement direct du modèle .glb : plus fiable que via #templeModel dans certains navigateurs.
+
+Animation-mixer ajouté au modèle (si le .glb contient des animations).
+
+Structure propre et claire : <a-assets> conservé mais gltf-model pointe directement.
+
+Message d’erreur clair si le modèle ne charge pas.
+
+Cube rouge conservé pour vérifier le tracking du marker.
+
+💡 Conseil pratique :
+
+Mets le fichier parthenon.glb dans le même dossier que ton HTML.
+
+Si tu ouvres directement le HTML, utilise un serveur local (ex: Live Server dans VS Code) pour que le modèle charge correctement.
+
+Tu peux créer plusieurs markers avec des IDs différents pour afficher différents modèles 3D.
+
+Si tu veux, je peux te faire la version avec pattern marker personnalisé, qui permettrait d’utiliser ton propre logo ou identifiant à la place du barcode. Ça rendrait ton projet encore plus pro ! Veux‑tu que je fasse ça ?
